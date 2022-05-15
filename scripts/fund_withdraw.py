@@ -13,8 +13,10 @@ def fund():
 
 def withdraw():
     print("Withdrawing")
+    fund_me = FundMe[-1]
+    fund_me.withdraw({"from": get_account()})
 
 
 def main():
     fund()
-    # withdraw()
+    withdraw()
