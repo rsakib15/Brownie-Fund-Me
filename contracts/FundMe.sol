@@ -33,18 +33,19 @@ contract FundMe {
     }
 
     function getDescription() public view returns (string memory) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
-        );
         return priceFeed.description();
     }
 
     function getPrice() public view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
-        );
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         return uint256(answer * 10000000000);
+    }
+
+    function getEntranceFee() public view returns (uint256) {
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        return ((minimumUSD * precision) / price);
     }
 
     function getConversionRate(uint256 ethAmount)
